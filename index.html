@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>European League Dashboard</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+
+<body style = "background-color: white">
+
+  <div class="container-fluid">
+    <div class="row ">
+      <div class="col-md-12 text-center" style="background-color:rgb(214, 216, 235);">
+        <h1 id="dashboard heading">Belgium Jupiler League
+            <img src="../images/b_jupiler_l.jpg" alt="logo" width="50", height="50" id ="logo">
+        </h1>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-8 text-light">
+          <h4>League:             
+              <select id="select-league" onchange="optionChanged(this.value)">
+                <option value="Belgium Jupiler League">Belgium Jupiler League</option>
+              </select>             
+          </h4>        
+      </div>
+      <div class="col-md-4 text-center align-middle">
+        <h4>Season:  
+          <select id="select-season" onchange="optionChanged(this.value)">
+              <option value="2006-2007">2006-2007</option>
+          </select></h4>
+      </div>
+      
+    </div>
+        <hr>
+        <br>
+    <div class="row">
+      <div class="col-md-2">        
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <h3 class="panel-title">Matches table list</h3>
+          </div>
+          <div id="match-metadata" class="panel-body"></div>
+          <table id="match-list">
+            <!-- section to be replaced by dynamic data -->
+                    <tr>
+                      <td><a href="1">Match1</a></td>
+                    </tr>
+                  <tr>
+                      <td><a href="1">Match2</a></td>
+                  </tr>
+                  <tr>
+                      <td><a href="1">Match3</a></td>
+                  </tr>
+                  <tr>
+                      <td><a href="1">Match1</a></td>
+                  </tr>
+                  <tr>
+                      <td><a href="1">Match2</a></td>
+                  </tr>
+                  <tr>
+                      <td><a href="1">Match3</a></td>
+                  </tr>
+                  <tr>
+                    <td><a href="1">Match1</a></td>
+                  </tr>
+                  <tr>
+                      <td><a href="1">Match2</a></td>
+                    </tr>
+                  <tr>
+                      <td><a href="1">Match3</a></td>
+                    </tr>
+          </table>
+        </div>
+      </div>
+      <div class="col-md-3">           
+        <div class = "container">
+          <div class ="row">
+            <div class="col-md-2">
+                <h3>Home team</h3>
+            </div>
+            <div class="col-md-2">
+                <h3>Away team</h3>
+            </div>            
+          </div>
+          <div class ="row">
+            <div class="col-md-4">
+              
+                    <div class="text-center">
+                      <h3 id = "score" > 2 - 1 </h4>
+                      <img src="../images/sball.png" alt="logo" width="50", height="50">
+                    </div>                
+              
+            </div>
+          </div>
+          <div class ="row">
+              <div class="col-md-4">
+                  <div class="panel panel-primary">
+                      <div class="panel-heading">
+                        <h3 class = "panel-title">Match Stats</h3>
+                      </div>
+                      <div id="pie" class="panel-body">
+                        Pie charts
+                      </div>                
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+          <div class="panel panel-primary">              
+              <div id="bar" class="panel-body">
+                  <img src="../images/dummychart.png" alt="dummychart" width="250", height="250">      
+              </div>
+          </div> 
+      </div>      
+      <div class="col-md-4">
+          <div class="panel panel-primary">
+              <div class="panel-heading">
+                <h3 class = "panel-title">Team Roster</h3>
+              </div>
+              <div id="team-list" class="panel-body">
+                <h4 id = "home-team">Home Team</h4>
+                  <ul>
+                      <li>Player1</li>
+                      <li>Player2</li>
+                      <li>Player3</li>
+                    </ul>  
+                <br>
+                <h4 id = "away-team">Away Team</h4>
+                  <ul>
+                      <li>Player1</li>
+                      <li>Player2</li>
+                      <li>Player3</li>
+                    </ul> 
+              </div>
+          </div> 
+      </div>
+    </div>
+    </div>  
+  </div>
+
+  
+
+  </div>
+  
+
+  <!-- <script src="https://cdn.plot.ly/plotly-1.31.2.min.js"></script> -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.js"></script>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+
+</body>
+
+</html>
