@@ -2,7 +2,7 @@ import os
 
 import pandas as pd
 import numpy as np
-
+import json 
 import sqlalchemy
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
@@ -10,6 +10,7 @@ from sqlalchemy import create_engine
 
 from flask import Flask, jsonify, render_template
 from flask_sqlalchemy import SQLAlchemy
+
 
 app = Flask(__name__)
 
@@ -19,7 +20,7 @@ app = Flask(__name__)
 #################################################
 
 
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///data/database.sqlite"
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///data/soccer.sqlite"
 db = SQLAlchemy(app)
 
 # reflect an existing database into a new model
@@ -28,14 +29,13 @@ Base = automap_base()
 Base.prepare(db.engine, reflect=True)
 
 # Save references to each table
-league_data = Base.classes.League
-match_data = Base.classes.Match
-player_data = Base.classes.Player
-playeratt_data = Base.classes.Player_Attributes
-team_data = Base.classes.Team
-teamatt_data = Base.classes.Team_Attributes
+soccer_data = Base.classes.soccerdata
+stmt = db.session.query(soccer_data.league_name).statement
+df = pd.read_sql_query(stmt, db.session.bind)
 
 
+csv_path = "data/latlong.csv"
+countryloc_df = pd.read_csv(csv_path)
 
 @app.route("/")
 def index():
@@ -45,31 +45,23 @@ def index():
 
 @app.route("/lnames")
 def lnames():
+    """Return list of league names."""        
+    data = df.league_name.unique()
+    return jsonify(list(data))
+
+
+@app.route("/clist")
+def clist():
     """Return list of league names."""
-    
-    stmt = db.session.query(league_data).statement
-    df = pd.read_sql_query(stmt, db.session.bind)
-    return jsonify(list(df["name"]))
-
-
-@app.route("/matchlist")
-def snames():
-    """Return list of league names."""
-    # print("hello sname")
-    # ltable = db.session.query(league_data.id).filter(league_data.name == lname)   
-    stmt = db.session.query(match_data).statement
-    df = pd.read_sql_query(stmt, db.session.bind)
-     # Format the data to send as json
-    data = {
-        "matchid": df.match_api_id.values.tolist(),
-        "hometeam": df.home_team_api_id.values.tolist(),
-        "awayteam": df.away_team_api_id.tolist(),        
-        "homegoal": df.home_team_goal.values.tolist(),
-        "awaygoal": df.away_team_goal.tolist()
-            }
-    return jsonify(data)
-
-
+    citydata = df["country_name"].value_counts()
+    citydata = pd.DataFrame(citydata).reset_index()
+    citydata.columns = ['country', 'count']
+    countryloc_df = countryloc_df['location']=countryloc_df['latitude']+ ',' + countryloc_df['longitude']
+    citylocdata = citydata[['country', 'count']].merge(countryloc_df[['country_name','location']], on='country_name', how='left')
+    citylocdata = citylocdata[['country','location','count']]
+    jlocdata = json.dumps(citylocdata)
+    return jlocdata
+        
     
 if __name__ == "__main__":
     app.run()
