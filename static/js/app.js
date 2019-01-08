@@ -11,22 +11,23 @@ function init()
         .text(lname)
         .property("value", lname);
     });
-    const selLeague = lgnames[1];
+    // const selLeague = lgnames[1];
     // sname(selLeague)
+    mlist();
   });  
 };
 
-function sname(selLeague)
+function mlist()
 {
-  var sselect = d3.select('#select-season');
-  var url = "/snames/" + selLeague;
-
-  d3.json(url).then((snames) => {
-    snames.forEach((sname) => {
-      sselect
-        .append("option")
-        .text(lname)
-        .property("value", sname);
+  var sselect = d3.select('#match-list');
+  
+  d3.json("/matchlist").then((mlists) => {
+    mlists.forEach((mlist) => {
+      console.log(mlist)
+      // sselect
+      //   .append("option")
+      //   .text(lname)
+      //   .property("value", sname);
     });
   });
 }

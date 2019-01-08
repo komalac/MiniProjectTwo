@@ -52,15 +52,22 @@ def lnames():
     return jsonify(list(df["name"]))
 
 
-@app.route("/snames/<lname>")
-def snames(lname):
+@app.route("/matchlist")
+def snames():
     """Return list of league names."""
-    print("hello sname")
-    ltable = db.session.query(league_data.id).filter(league_data.name == lname)   
-    stmt = db.session.query(match_data.season).filter(match_data.league_id==ltable.c.id).all()
+    # print("hello sname")
+    # ltable = db.session.query(league_data.id).filter(league_data.name == lname)   
+    stmt = db.session.query(match_data).statement
     df = pd.read_sql_query(stmt, db.session.bind)
-    print(df)
-    return jsonify(list(df["name"]))
+     # Format the data to send as json
+    data = {
+        "matchid": df.match_api_id.values.tolist(),
+        "hometeam": df.home_team_api_id.values.tolist(),
+        "awayteam": df.away_team_api_id.tolist(),        
+        "homegoal": df.home_team_goal.values.tolist(),
+        "awaygoal": df.away_team_goal.tolist()
+            }
+    return jsonify(data)
 
 
     
