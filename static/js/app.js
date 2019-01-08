@@ -21,7 +21,7 @@ function init()
 function countrymap()
 {
       // Create a map object
-    var myMap = L.map("map", {
+    var myMap = L.map("country-map", {
       center: [15.5994, -28.6731],
       zoom: 3
     });
@@ -34,17 +34,23 @@ function countrymap()
       accessToken: API_KEY
     }).addTo(myMap);
     
+ 
 
-    d3.json("/clist").then((clist) => {    
-      var countries = clist
+    d3.json("/clist").then((clist) => {   
+        var countries = [{
+          location: clist.location,
+          name: clist.country_name,
+          matches: clist.count
+        }]
     });
+    console.log(countries)
 
     // Loop through the cities array and create one marker for each city object
     for (var i = 0; i < countries.length; i++) {
 
       // Conditionals for countries points
       var color = "";
-      if (countries[i].count > 100 {
+      if (countries[i].count > 100) {
         color = "yellow";
       }
       else if (countries[i].count > 200) {
@@ -63,8 +69,8 @@ function countrymap()
         color: "white",
         fillColor: color,
         // Adjust radius
-        radius: countries[i].points * 1500
-      }).bindPopup("<h1>" + countries[i].country_name + "</h1> <hr> <h3>Number of matches: " + countries[i].count + "</h3>").addTo(myMap);
+        radius: countries[i].matches * 1500
+      }).bindPopup("<h1>" + countries[i].country_name + "</h1> <hr> <h3>Number of matches: " + countries[i].matches + "</h3>").addTo(myMap);
     }
 
 }

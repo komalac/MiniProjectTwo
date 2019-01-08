@@ -15,6 +15,7 @@
   integrity="sha512-tAGcCfR4Sc5ZP5ZoVz0quoZDYX5aCtEm/eu1KhSLj2c9eFrylXZknQYmxUssFaVJKvvc0dJQixhGjG2yXWiV9Q=="
   crossorigin=""></script>
 
+  <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 
 <body style = "background-color: white">
@@ -23,7 +24,7 @@
     <div class="row ">
       <div class="col-md-12 text-center" style="background-color:rgb(214, 216, 235);">
         <h1 id="dashboard heading">Belgium Jupiler League
-            <img src="../images/b_jupiler_l.jpg" alt="logo" width="50", height="50" id ="logo">
+            <img src="/images/b_jupiler_l.jpg" alt="logo" width="50", height="50" id ="logo">
         </h1>
       </div>
     </div>
@@ -46,15 +47,26 @@
         <hr>
         <br>
     <div class="row">
-      <div class="col-md-2">        
+      <div class="col-md-6">        
         <div class="panel panel-primary">
           <div class="panel-heading">
-            <h3 class="panel-title">Matches table list</h3>
+            <h3 class="panel-title">Matches in each country</h3>
           </div>
-          <div id="country-map" class="panel-body"></div>
-          
+          <div id="country-map" class="panel-body"></div>          
         </div>
       </div>
+      <div class="col-md-6">        
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <h3 class="panel-title">Matches in each country</h3>
+          </div>
+          <div class = "map-container">
+            <div id="country-map" class="panel-body"></div>          
+          </div>
+        </div>
+      </div>
+    </div>
+  </div class = "row">
       <div class="col-md-3">           
         <div class = "container">
           <div class ="row">
@@ -70,7 +82,7 @@
               
                     <div class="text-center">
                       <h3 id = "score" > 2 - 1 </h4>
-                      <img src="../images/sball.png" alt="logo" width="50", height="50">
+                      <img src="/images/sball.png" alt="logo" width="50", height="50">
                     </div>                
               
             </div>
@@ -92,7 +104,7 @@
       <div class="col-md-3">
           <div class="panel panel-primary">              
               <div id="bar" class="panel-body">
-                  <img src="../images/dummychart.png" alt="dummychart" width="250", height="250">      
+                  <img src="/images/dummychart.png" alt="dummychart" width="250", height="250">      
               </div>
           </div> 
       </div>      
@@ -130,7 +142,9 @@
   <!-- <script src="https://cdn.plot.ly/plotly-1.31.2.min.js"></script> -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.js"></script>
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+
+  <script type="text/javascript" src="{{ url_for('static', filename='js/config.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
 
 </body>
 

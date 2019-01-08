@@ -1,0 +1,11 @@
+#map-container {
+  position: relative;
+  height: 680px;
+  width: 600px;
+}
+
+#country-map {
+  position: relative;
+  height: inherit;
+  width: inherit;
+}
