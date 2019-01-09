@@ -1,0 +1,17 @@
+div.map-container {
+  position: absolute;
+  height: auto;
+  width: 1200px;
+}
+
+#country-map {
+  position: relative;
+  height: 480px;
+  width: 880px;
+}
+
+div.chart-container {
+  position: absolute;
+  height: 400px;
+  width: 800px;
+}
