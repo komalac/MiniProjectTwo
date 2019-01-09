@@ -11,12 +11,34 @@ function init()
         .text(lname)
         .property("value", lname);
     });
-    const selLeague = lgnames[1];
-    
+  
+    var newleague = d3.select("#select-league").property("value")
+    snames(newleague) 
     countrymap()
   });  
 };
 
+function snames(newleague)
+{
+  var lselect = d3.select("#select-season");
+  var url = "/snames/" + newleague;
+
+  d3.json(url).then((snnames) => {
+    
+    snnames.forEach((snname) => {
+      
+      lselect
+        .append("option")
+        .text(snname)
+        .property("value", snname);
+    });
+  });
+}
+
+function leagueChanged(newleague) {
+  // Fetch new data each time a new sample is selected
+  snames(newleague)
+}
 
 function countrymap()
 {
@@ -38,8 +60,6 @@ function countrymap()
 
     d3.json("/clist").then((clist) => {  
       
-        console.log(clist);
-
         var countries = []
         
         clist.forEach(function(d) {
@@ -50,7 +70,7 @@ function countrymap()
           })
         })
 
-        console.log(countries);
+      
         // Loop through the cities array and create one marker for each city object
         for (var i = 0; i < countries.length; i++) {
 
@@ -69,13 +89,7 @@ function countrymap()
             color = "red";
           }
 
-          // // Add circles to map
-          // L.circle([ countries[i]["latitude"], countries[i]["longitude"] ], {
-
-          // })
-
-
-
+      
           L.circle(countries[i].location, {
             fillOpacity: 0.75,
             color: "white",
@@ -83,13 +97,10 @@ function countrymap()
             // Adjust radius
             // radius: parseint(countries[i].matches) * 1500
             radius: 50  * 1500
-          }).bindPopup("<h1>" + countries[i].country + "</h1> <hr> <h3>Number of matches: " + countries[i].count + "</h3>").addTo(myMap);
+          }).bindPopup("<h4 text-align: center>" + countries[i].country + "</h4> Number of matches: " + countries[i].count).addTo(myMap);
         }
           
-      });
-
-
-    
+      });  
 
 }
 

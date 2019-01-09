@@ -23,105 +23,63 @@
   <div class="container-fluid">
     <div class="row ">
       <div class="col-md-12 text-center" style="background-color:rgb(214, 216, 235);">
-        <h1 id="dashboard heading">Belgium Jupiler League
-            <img src="/images/b_jupiler_l.jpg"></img></h1>
-      </div>
+      <h1 id="dashboard heading">European soccer data analysis
+          <img src="{{ url_for('static', filename='images/sball.png') }}" width="50", height="50"></img></h1>
     </div>
-    <div class="row">
-      <div class="col-md-8 text-light">
-          <h4>League:             
-              <select id="select-league" onchange="optionChanged(this.value)">
-                
-              </select>             
-          </h4>        
-      </div>
-      <div class="col-md-4 text-center align-middle">
-        <h4>Season:  
-          <select id="select-season" onchange="optionChanged(this.value)">
-              <option value="2006-2007">2015-2016</option>
-          </select></h4>
-      </div>
+  </div>
+
+
+  <div class="row">
+    <div class="col-md-8 text-light">
+        <h4>League:             
+            <select id="select-league" onchange="optionChanged(this.value)">
+              
+            </select>             
+        </h4>        
+    </div>
+    <div class="col-md-4 text-center align-middle">
+      <h4>Season:  
+        <select id="select-season" onchange="optionChanged(this.value)">
+            
+        </select></h4>
+    </div>      
+  </div>
       
-    </div>
-        <hr>
-        <br>
-    <div class="row">
-      <div class="col-md-6"> 
-          <h3 class="panel-title">Matches in each country</h3>
+  <div class="row">
+    <div class="col-md-6"> 
+        <div>
+          <h4 style="text-align:center">Number of matches</h4>
           <div class = "map-container"></div>
-             <div id="country-map" class="panel-body"></div>                      
-          </div>
-           
-      <!-- <div class="col-md-6">        
-          <h3 class="panel-title">Matches in each country</h3>      
-          <div class = "jhj">
-            <div id="khj" class="panel-body"></div>     
-          </div>
-      </div> -->
-    </div>
-  </div class = "row">
-      <div class="col-md-3">           
-        <div class = "container">
-          <div class ="row">
-            <div class="col-md-2">
-                <h3>Home team</h3>
-            </div>
-            <div class="col-md-2">
-                <h3>Away team</h3>
-            </div>            
-          </div>
-          <div class ="row">
-            <div class="col-md-4">
-              
-                    <div class="text-center">
-                      <h3 id = "score" > 2 - 1 </h4>
-                      <img src="/images/sball.png" alt="logo" width="50", height="50">
-                    </div>                
-              
-            </div>
-          </div>
-          <div class ="row">
-              <div class="col-md-4">
-                  <div class="panel panel-primary">
-                      <div class="panel-heading">
-                        <h3 class = "panel-title">Match Stats</h3>
-                      </div>
-                      <div id="pie" class="panel-body">
-                        Pie charts
-                      </div>                
-                </div>
-              </div>
-            </div>
+              <div id="country-map" class="panel-body"></div>                      
         </div>
+      </div>  
+    <div class="col-md-6">                  
+        <div class="chart-container">
+            <h4 style="text-align:center">chart1</h4>
+            
+            <div id="team-list" class="panel-body">
+              
+            </div>
+        </div> 
+    </div>
+  </div>
+
+
+  </div class = "row">
+    <div class="col-md-6">                  
+      <div>
+        <div >Text about League</div>     
       </div>
-      <div class="col-md-3">
-          <div class="panel panel-primary">              
-              <div id="bar" class="panel-body">
-                  <img src="/images/dummychart.png" alt="dummychart" width="250", height="250">      
-              </div>
-          </div> 
-      </div>      
-      <div class="col-md-4">
-          <div class="panel panel-primary">
-              <div class="panel-heading">
-                <h3 class = "panel-title">Team Roster</h3>
-              </div>
-              <div id="team-list" class="panel-body">
-                <h4 id = "home-team">Home Team</h4>
-                  <ul>
-                      <li>Player1</li>
-                      <li>Player2</li>
-                      <li>Player3</li>
-                    </ul>  
-                <br>
-                <h4 id = "away-team">Away Team</h4>
-                  <ul>
-                      <li>Player1</li>
-                      <li>Player2</li>
-                      <li>Player3</li>
-                    </ul> 
-              </div>
-          </div> 
+    </div>
+
+    <div class="col-md-6">
+        <div class="chart-container">
+            <h4 style="text-align:center">chart1</h4>
+            
+            <div id="team-list" class="panel-body">
+              
+            </div>
+        </div> 
       </div>
     </div>
     </div>  

@@ -49,6 +49,13 @@ def lnames():
     data = df.league.unique()
     return jsonify(list(data))
 
+@app.route("/snames/<lgname>")
+def snames(lgname):
+    """Return list of season names."""        
+    dfa = df[df['league'].isin([lgname])]
+    data = dfa.season.unique()
+    return jsonify(list(data))
+
 
 @app.route("/clist")
 def clist():

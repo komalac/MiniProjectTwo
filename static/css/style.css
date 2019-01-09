@@ -6,6 +6,12 @@ div.map-container {
 
 #country-map {
   position: relative;
-  height: 380px;
-  width: 680px;
+  height: 480px;
+  width: 880px;
+}
+
+div.chart-container {
+  position: absolute;
+  height: 400px;
+  width: 800px;
 }
