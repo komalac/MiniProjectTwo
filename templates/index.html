@@ -24,70 +24,81 @@
     <div class="row ">
       <div class="col-md-12 text-center" style="background-color:rgb(214, 216, 235);">
       <h1 id="dashboard heading">European soccer data analysis
-          <img src="{{ url_for('static', filename='images/sball.png') }}" width="50", height="50"></img></h1>
+          <img src="{{ url_for('static', filename='images/sball.png') }}" alt="logo" width="50", height="50" id ="logo">
     </div>
   </div>
 
+  <br>
 
-  <div class="row">
-    <div class="col-md-8 text-light">
-        <h4>League:             
-            <select id="select-league" onchange="optionChanged(this.value)">
-              
-            </select>             
-        </h4>        
-    </div>
-    <div class="col-md-4 text-center align-middle">
-      <h4>Season:  
-        <select id="select-season" onchange="optionChanged(this.value)">
-            
-        </select></h4>
-    </div>      
-  </div>
-      
-  <div class="row">
-    <div class="col-md-6"> 
-        <div>
-          <h4 style="text-align:center">Number of matches</h4>
-          <div class = "map-container"></div>
+  <div class = "row">
+    <div class = "col-md-6">
+      <div class="row">
+        <div class="col-md-6"> 
+          <div>          
+              <div class = "map-container"></div>
               <div id="country-map" class="panel-body"></div>                      
-        </div>
-      </div>  
-    <div class="col-md-6">                  
-        <div class="chart-container">
-            <h4 style="text-align:center">chart1</h4>
-            
-            <div id="team-list" class="panel-body">
-              
             </div>
-        </div> 
-    </div>
-  </div>
+        </div>       
+      </div>
+      <br>
 
-
-  </div class = "row">
-    <div class="col-md-6">                  
-      <div>
-        <div >Text about League</div>     
+      <div class = "row">
+        <div class="col-md-6 text-lightalign-middle">      
+            <h4>League:             
+                <select id="select-league" onchange="optionChanged(this.value)">
+                  
+                </select>             
+            </h4>        
+        </div>
+        <div class="col-md-6 text-center align-middle">
+            <h4>Season:  
+              <select id="select-season" onchange="optionChanged(this.value)">
+                  
+              </select>
+            </h4>
+        </div>      
+      </div>
+      <br>
+      
+      <div class = "row">
+        <div class="col-md-3 text-light">      
+          <img id ='leaguelogo' align="middle">          
+          
+        </div>               
+      
+        <div class="col-md-9 text-light">      
+          
+          <p id = "lgtext" style="text-align:justify">  </p>
+        </div>               
       </div>
     </div>
 
     <div class="col-md-6">
-        <div class="chart-container">
-            <h4 style="text-align:center">chart1</h4>
-            
-            <div id="team-list" class="panel-body">
-              
+      <div class = "row">
+        <div class="co-md-12">
+            <h4 style="text-align:center">chart1</h4>            
+            <div class="chart-container" id = "chart1">              
             </div>
         </div> 
       </div>
+      <div class = "row">
+        <div class="co-md-12">
+            <h4 style="text-align:center">chart2</h4>            
+            <div class="chart-container" id = "chart2">              
+            </div>
+        </div> 
+      </div>
+      <div class = "row">
+          <div class="co-md-12">
+              <h4 style="text-align:center">chart3</h4>            
+              <div class="chart-container" id = "chart3">              
+              </div>
+          </div> 
+        </div>
     </div>
-    </div>  
   </div>
-
+    
   
-
-  </div>
   
 
   <!-- <script src="https://cdn.plot.ly/plotly-1.31.2.min.js"></script> -->
