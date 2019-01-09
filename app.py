@@ -56,6 +56,13 @@ def snames(lgname):
     data = dfa.season.unique()
     return jsonify(list(data))
 
+@app.route("/lgdetails/<lgname>")
+def lgdetails(lgname):
+    """Return list of season names."""        
+    dfa = df[df['league'].isin([lgname])]
+    data = dfa.iloc[0]
+    print(data)
+    return jsonify(list(data))
 
 @app.route("/clist")
 def clist():
@@ -89,4 +96,4 @@ def clist():
         
     
 if __name__ == "__main__":
-    app.run(debug=True, port=5001)
+    app.run(debug=True, port=5002)

@@ -14,6 +14,7 @@ function init()
   
     var newleague = d3.select("#select-league").property("value")
     snames(newleague) 
+    lgdetails(newleague)
     countrymap()
   });  
 };
@@ -104,6 +105,29 @@ function countrymap()
 
 }
 
+
+function lgdetails(newleague)
+{   
+  var imgselect = d3.select("#leaguelogo");
+  var lgtext = d3.select("#lgtext");
+
+  var url = "/lgdetails/" + newleague;
+
+  d3.json(url).then((lgtext) => {        
+        imgsrc= "/static/images/" + lgtext[9]         
+        imgselect.attr('src', imgsrc)        
+        d3.select("#lgtext")                  
+          .html(lgtext[10])
+  });
+
+}
+
+function optionChanged() {
+  // Fetch new data each time a new sample is selected
+  var newleague = d3.select("#select-league").property("value")
+  snames(newleague) 
+  lgdetails(newleague)
+}
 
 // Initialize the dashboard
 init();
