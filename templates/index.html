@@ -15,7 +15,7 @@
   integrity="sha512-tAGcCfR4Sc5ZP5ZoVz0quoZDYX5aCtEm/eu1KhSLj2c9eFrylXZknQYmxUssFaVJKvvc0dJQixhGjG2yXWiV9Q=="
   crossorigin=""></script>
 
-  <link rel="stylesheet" type="text/css" href="style.css">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 
 <body style = "background-color: white">
@@ -24,8 +24,7 @@
     <div class="row ">
       <div class="col-md-12 text-center" style="background-color:rgb(214, 216, 235);">
         <h1 id="dashboard heading">Belgium Jupiler League
-            <img src="/images/b_jupiler_l.jpg" alt="logo" width="50", height="50" id ="logo">
-        </h1>
+            <img src="/images/b_jupiler_l.jpg"></img></h1>
       </div>
     </div>
     <div class="row">
@@ -47,24 +46,18 @@
         <hr>
         <br>
     <div class="row">
-      <div class="col-md-6">        
-        <div class="panel panel-primary">
-          <div class="panel-heading">
-            <h3 class="panel-title">Matches in each country</h3>
+      <div class="col-md-6"> 
+          <h3 class="panel-title">Matches in each country</h3>
+          <div class = "map-container"></div>
+             <div id="country-map" class="panel-body"></div>                      
           </div>
-          <div id="country-map" class="panel-body"></div>          
-        </div>
-      </div>
-      <div class="col-md-6">        
-        <div class="panel panel-primary">
-          <div class="panel-heading">
-            <h3 class="panel-title">Matches in each country</h3>
+           
+      <!-- <div class="col-md-6">        
+          <h3 class="panel-title">Matches in each country</h3>      
+          <div class = "jhj">
+            <div id="khj" class="panel-body"></div>     
           </div>
-          <div class = "map-container">
-            <div id="country-map" class="panel-body"></div>          
-          </div>
-        </div>
-      </div>
+      </div> -->
     </div>
   </div class = "row">
       <div class="col-md-3">           

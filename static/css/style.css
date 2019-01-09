@@ -1,0 +1,11 @@
+div.map-container {
+  position: absolute;
+  height: auto;
+  width: 1200px;
+}
+
+#country-map {
+  position: relative;
+  height: 380px;
+  width: 680px;
+}

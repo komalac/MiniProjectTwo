@@ -21,9 +21,9 @@ function init()
 function countrymap()
 {
       // Create a map object
-    var myMap = L.map("country-map", {
-      center: [15.5994, -28.6731],
-      zoom: 3
+    var myMap = L.map("country-map", { 
+      center: [48, 4],
+      zoom: 4
     });
 
     L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}", {
@@ -34,44 +34,62 @@ function countrymap()
       accessToken: API_KEY
     }).addTo(myMap);
     
- 
+    // const countries=[];
 
-    d3.json("/clist").then((clist) => {   
-        var countries = [{
-          location: clist.location,
-          name: clist.country_name,
-          matches: clist.count
-        }]
-    });
-    console.log(countries)
+    d3.json("/clist").then((clist) => {  
+      
+        console.log(clist);
 
-    // Loop through the cities array and create one marker for each city object
-    for (var i = 0; i < countries.length; i++) {
+        var countries = []
+        
+        clist.forEach(function(d) {
+          countries.push({
+            "country": d.country,
+            "location": d.location,
+            "count":d.count
+          })
+        })
 
-      // Conditionals for countries points
-      var color = "";
-      if (countries[i].count > 100) {
-        color = "yellow";
-      }
-      else if (countries[i].count > 200) {
-        color = "blue";
-      }
-      else if (countries[i].count > 300) {
-        color = "green";
-      }
-      else {
-        color = "red";
-      }
+        console.log(countries);
+        // Loop through the cities array and create one marker for each city object
+        for (var i = 0; i < countries.length; i++) {
 
-      // Add circles to map
-      L.circle(countries[i].location, {
-        fillOpacity: 0.75,
-        color: "white",
-        fillColor: color,
-        // Adjust radius
-        radius: countries[i].matches * 1500
-      }).bindPopup("<h1>" + countries[i].country_name + "</h1> <hr> <h3>Number of matches: " + countries[i].matches + "</h3>").addTo(myMap);
-    }
+          // Conditionals for countries points
+          var color = "";
+          if (countries[i].count > 100) {
+            color = "yellow";
+          }
+          else if (countries[i].count > 200) {
+            color = "blue";
+          }
+          else if (countries[i].count > 300) {
+            color = "green";
+          }
+          else {
+            color = "red";
+          }
+
+          // // Add circles to map
+          // L.circle([ countries[i]["latitude"], countries[i]["longitude"] ], {
+
+          // })
+
+
+
+          L.circle(countries[i].location, {
+            fillOpacity: 0.75,
+            color: "white",
+            fillColor: color,
+            // Adjust radius
+            // radius: parseint(countries[i].matches) * 1500
+            radius: 50  * 1500
+          }).bindPopup("<h1>" + countries[i].country + "</h1> <hr> <h3>Number of matches: " + countries[i].count + "</h3>").addTo(myMap);
+        }
+          
+      });
+
+
+    
 
 }
 

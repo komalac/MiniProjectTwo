@@ -20,7 +20,7 @@ app = Flask(__name__)
 #################################################
 
 
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///data/soccer.sqlite"
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///data/SoccerDatabase.sqlite"
 db = SQLAlchemy(app)
 
 # reflect an existing database into a new model
@@ -29,7 +29,7 @@ Base = automap_base()
 Base.prepare(db.engine, reflect=True)
 
 # Save references to each table
-soccer_data = Base.classes.soccerdata
+soccer_data = Base.classes.MasterData
 stmt = db.session.query(soccer_data).statement
 df = pd.read_sql_query(stmt, db.session.bind)
 
@@ -46,27 +46,40 @@ def index():
 @app.route("/lnames")
 def lnames():
     """Return list of league names."""        
-    data = df.league_name.unique()
+    data = df.league.unique()
     return jsonify(list(data))
 
 
 @app.route("/clist")
 def clist():
-    """Return list of league names."""
-    citydata = df["country_name"].value_counts()
+    """Return list of countries"""
+    citydata = df["country"].value_counts()
     citydata = pd.DataFrame(citydata).reset_index()
-    citydata.columns = ['country_name', 'count']
+    citydata.columns = ['country', 'count']
     # countryloc_df = countryloc_df['latitude']+ ',' + countryloc_df['longitude']
     df1 = countryloc_df['latitude'].astype(str)
     df2 = countryloc_df['longitude'].astype(str)
-    countryloc_dfa = df1+ ',' + df2
+
+    # print(df1, df2, citydata)
+    # countryloc_dfa = [countryloc_df['latitude'], countryloc_df['longitude']]
+    # countryloc_dfa = df1+ ',' + df2
+    countryloc_dfa = list(zip(countryloc_df['latitude'], countryloc_df['longitude']))
     countryloc_df["location"] = countryloc_dfa    
-    citylocdata = citydata[['country_name', 'count']].merge(countryloc_df[['country_name','location']], on='country_name', how='left')
-    citylocdata = citylocdata[['country_name','location','count']]
+
+    # print(countryloc_dfa)
+
+    citylocdata = citydata[['country', 'count']].merge(countryloc_df[['country','location']], on='country', how='left')
+    citylocdata = citylocdata[['country','location','count']]
+
+    # print(citylocdata)
+
     convjason = citylocdata.to_dict(orient='records')
-    jlocdata = json.dumps(convjason)    
+    jlocdata = json.dumps(convjason)     
+
+    # print(list(citylocdata))
+   
     return jlocdata
         
     
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True, port=5001)
