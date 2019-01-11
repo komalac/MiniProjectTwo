@@ -1,4 +1,4 @@
-function init()
+ function init()
 {
   var lselect = d3.select("#select-league");
   
@@ -11,39 +11,71 @@ function init()
         .text(lname)
         .property("value", lname);
     });
+
   
-    var newleague = d3.select("#select-league").property("value")
-    snames(newleague) 
+    newleague = d3.select("#select-league").property("value")    
+    var tselect = d3.select("#select-season");
+    tselect.html("")
+    var url = "/snames/" + newleague;
+
+    d3.json(url).then((snnames) => {
+      
+      snnames.forEach((snname) => {
+        
+        tselect
+          .append("option")
+          .text(snname)
+          .property("value", snname);
+      });    
+    });
+    // snames(newleague) 
+    // newseason = d3.select("#select-season").property("value")    
+    // console.log(newseason)
+    newseason = '2008-2009'
     lgdetails(newleague)
     countrymap()
+    tschart(newleague, newseason)
+    
+
   });  
 };
 
 function snames(newleague)
-{
-  var lselect = d3.select("#select-season");
+{  
+  var tselect = d3.select("#select-season");
+  tselect.html("")
   var url = "/snames/" + newleague;
 
   d3.json(url).then((snnames) => {
     
     snnames.forEach((snname) => {
       
-      lselect
+      tselect
         .append("option")
         .text(snname)
         .property("value", snname);
-    });
-  });
+    });    
+  });    
 }
 
-function leagueChanged(newleague) {
-  // Fetch new data each time a new sample is selected
+function leagueChanged(newleague) {  
+  newleague = d3.select("#select-league").property("value")   
+  newseason = d3.select("#select-season").property("value")
   snames(newleague)
+  tschart(newleague, newseason)
+  lgdetails(newleague)    
+  
+}
+
+function seasonChanged(newSeason) {
+  newleague = d3.select("#select-league").property("value")   
+  newseason = d3.select("#select-season").property("value")       
+  tschart(newleague, newseason)
 }
 
 function countrymap()
 {
-      // Create a map object
+      
     var myMap = L.map("country-map", { 
       center: [48, 4],
       zoom: 4
@@ -122,12 +154,61 @@ function lgdetails(newleague)
 
 }
 
-function optionChanged() {
-  // Fetch new data each time a new sample is selected
-  var newleague = d3.select("#select-league").property("value")
-  snames(newleague) 
-  lgdetails(newleague)
+
+function tschart(newleague, newseason){
+
+  var url = "/tschart/" + newleague +'/'+ newseason;
+  
+  d3.json(url).then((tsdata) => { 
+    var chdata = []
+        
+        tsdata.forEach(function(d) {
+          chdata.push({
+            "date": d.date,
+            "count": d.id,            
+          })
+        })
+
+        console.log(chdata)
+      
+      var data1 = {
+      labels: chdata.map(function(d) {
+        return d.date;
+      }),
+      series: [chdata.map(function(d) {
+        return d.count;
+      })]
+    };
+
+
+      var chart = new Chartist.Line('.ct-chart', data1, 
+      {
+        fullWidth: true,
+        chartPadding: {
+          right: 40
+        }
+      }      
+      );
+      var chart = new Chartist.Line('.ct-chart2', data1, 
+      {
+        fullWidth: true,
+        chartPadding: {
+          right: 40
+        }
+      });
+      var chart = new Chartist.Line('.ct-chart3', data1, 
+      {
+        fullWidth: true,
+        chartPadding: {
+          right: 40
+        }
+      });
+    });
+
 }
 
+
 // Initialize the dashboard
+var newleague;
+var newseason;
 init();
