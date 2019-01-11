@@ -71,8 +71,8 @@ def clist():
     citydata = df["country"].value_counts()
     citydata = pd.DataFrame(citydata).reset_index()
     citydata.columns = ['country', 'count']    
-    df1 = countryloc_df['latitude'].astype(str)
-    df2 = countryloc_df['longitude'].astype(str)
+    # df1 = countryloc_df['latitude'].astype(str)
+    # df2 = countryloc_df['longitude'].astype(str)
 
     countryloc_dfa = list(zip(countryloc_df['latitude'], countryloc_df['longitude']))
     countryloc_df["location"] = countryloc_dfa    
@@ -97,6 +97,19 @@ def tschart(lgname, sname):
     jlocdata = json.dumps(convjason)     
 
     return jlocdata
+
+@app.route("/pchart/<lgname>/<sname>")    
+def pchart(lgname, sname):
+    print(lgname)
+    print(sname)
+    dfa = df[df['league'].isin([lgname])]
+    dfa = dfa[dfa['season'].isin([sname])]
+    homecnt = dfa[(dfa['home_team_goal'] > dfa['away_team_goal'])].count().astype(str)
+    awaycnt = dfa[(dfa['home_team_goal'] < dfa['away_team_goal'])].count().astype(str)
+    drawcnt = dfa[(dfa['home_team_goal'] == dfa['away_team_goal'])].count().astype(str)
+    dfcnt = [{'team':'Won by Home team','matchcnt':homecnt[0]}, {'team':'Won by Away team', 'matchcnt':awaycnt[0] }, {'team':'Ended in Draw', 'matchcnt':drawcnt[0]}]
+
+    return jsonify(dfcnt)
 
 
 if __name__ == "__main__":
