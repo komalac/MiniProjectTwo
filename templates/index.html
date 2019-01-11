@@ -11,14 +11,21 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.3/dist/leaflet.css"
   integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ=="
   crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.3.3/dist/leaflet.js"
+  integrity="sha512-tAGcCfR4Sc5ZP5ZoVz0quoZDYX5aCtEm/eu1KhSLj2c9eFrylXZknQYmxUssFaVJKvvc0dJQixhGjG2yXWiV9Q=="
+  crossorigin=""></script>
 
   <link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
   <script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
 
-  <script src="https://unpkg.com/leaflet@1.3.3/dist/leaflet.js"
-  integrity="sha512-tAGcCfR4Sc5ZP5ZoVz0quoZDYX5aCtEm/eu1KhSLj2c9eFrylXZknQYmxUssFaVJKvvc0dJQixhGjG2yXWiV9Q=="
-  crossorigin=""></script>
+  <script src="http://d3js.org/d3.v3.min.js"  charset="utf-8"></script>
+  <script type="text/javascript" src="https://d3js.org/d3.v3.js"></script>
+  <!-- <script src="/js/plugins/d3pie/d3pie.min.js"></script> -->
+  <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/d3/4.7.2/d3.min.js"></script> -->
+<script src="{{ url_for('static', filename='js/d3pie.min.js') }}"></script>
+
+  
 
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
@@ -28,8 +35,9 @@
   <div class="container-fluid">
     <div class="row ">
       <div class="col-md-12 text-center" style="background-color:rgb(214, 216, 235);">
-      <h1 id="dashboard heading">European soccer data analysis
+      <h2 id="dashboard heading">European soccer data analysis
           <img src="{{ url_for('static', filename='images/sball.png') }}" alt="logo" width="50", height="50" id ="logo">
+      </h2>
     </div>
   </div>
 
@@ -49,18 +57,18 @@
 
       <div class = "row">
         <div class="col-md-6 text-lightalign-middle">      
-            <h4>League:             
+            <h5>League:             
                 <select id="select-league" onchange="leagueChanged(this.value)">
                   
                 </select>             
-            </h4>        
+            </h5>        
         </div>
         <div class="col-md-6 text-center align-middle">
-            <h4>Season:  
+            <h5>Season:  
               <select id="select-season" onchange="seasonChanged(this.value)">
                   
               </select>
-            </h4>
+            </h5>
         </div>      
       </div>
       <br>
@@ -80,26 +88,28 @@
 
     <div class="col-md-6">
       <div class = "row">
-        <div class="co-md-12">
-            <h4 style="text-align:center">chart1</h4>            
-            <div class="chart-container" id = "chart1">      
-                <div class = "ct-chart3"></div>                    
-            </div>
+        <div class="col-md-6">
+            <h5 style="text-align:center">Matches won           
+                
+                <div  id = "pieChart"></div>           
+                <!-- <script type="text/javascript" src="d3js.js"></script>          -->
+            
+            </h5>
+        </div> 
+
+        <div class="col-md-6">
+          <h4 style="text-align:center">chart2</h4>            
+          <div class="chart-container" id = "chart2">              
+              <div class = "barchart"></div>            
+          </div>
         </div> 
       </div>
+      
       <div class = "row">
-        <div class="co-md-12">
-            <h4 style="text-align:center">chart2</h4>            
-            <div class="chart-container" id = "chart2">              
-                <div class = "ct-chart2"></div>            
-            </div>
-        </div> 
-      </div>
-      <div class = "row">
-          <div class="co-md-12">
-              <h4 style="text-align:center">chart3</h4>            
+          <div class="col-md-12">
+              <h5 style="text-align:center">Number of matches played for Selected Season</h5>            
               <div class="chart-container">  
-                <div class = "ct-chart"></div>            
+                <div class = "ct-chart ct-label"></div>            
               </div>
           </div> 
         </div>

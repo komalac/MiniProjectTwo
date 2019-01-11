@@ -35,7 +35,7 @@
     lgdetails(newleague)
     countrymap()
     tschart(newleague, newseason)
-    
+    pchart(newleague, newseason)
 
   });  
 };
@@ -62,15 +62,16 @@ function leagueChanged(newleague) {
   newleague = d3.select("#select-league").property("value")   
   newseason = d3.select("#select-season").property("value")
   snames(newleague)
-  tschart(newleague, newseason)
   lgdetails(newleague)    
-  
+  tschart(newleague, newseason)
+  pchart(newleague, newseason)  
 }
 
 function seasonChanged(newSeason) {
   newleague = d3.select("#select-league").property("value")   
   newseason = d3.select("#select-season").property("value")       
   tschart(newleague, newseason)
+  pchart(newleague, newseason)
 }
 
 function countrymap()
@@ -167,9 +168,7 @@ function tschart(newleague, newseason){
             "date": d.date,
             "count": d.id,            
           })
-        })
-
-        console.log(chdata)
+        })        
       
       var data1 = {
       labels: chdata.map(function(d) {
@@ -180,7 +179,7 @@ function tschart(newleague, newseason){
       })]
     };
 
-
+      Chart.defaults.global.defaultFontColor = 'black';
       var chart = new Chartist.Line('.ct-chart', data1, 
       {
         fullWidth: true,
@@ -189,24 +188,78 @@ function tschart(newleague, newseason){
         }
       }      
       );
-      var chart = new Chartist.Line('.ct-chart2', data1, 
-      {
-        fullWidth: true,
-        chartPadding: {
-          right: 40
-        }
-      });
-      var chart = new Chartist.Line('.ct-chart3', data1, 
-      {
-        fullWidth: true,
-        chartPadding: {
-          right: 40
-        }
-      });
+      
     });
 
 }
 
+function pchart(newleague, newseason){
+
+  var url = "/pchart/" + newleague +'/'+ newseason;
+  // var svg = dimple.newSvg("#piechart", 590, 400);
+  piedata = []
+  d3.select("#pieChart").html("")
+  d3.json(url).then((pcdata) => { 
+    pcdata.forEach(function(d,i){
+
+      piedata.push({
+
+        label: d.team,
+  
+        value: +d.matchcnt
+      })
+    })
+    console.log(piedata)
+      var pie = new d3pie("pieChart", {
+        "header": {    
+          "title": {    
+            // "text": "Matches won",    
+            "fontSize": 22,    
+            "font": "verdana"    
+          },    
+        },
+    
+        "size": {    
+          "canvasHeight": 400,    
+          "canvasWidth": 480    
+        },
+    
+        "data": {    
+          "content": piedata    
+        },
+    
+        "labels": {    
+          "outer": {    
+            "pieDistance": 10   
+          }    
+        },    
+        "tooltips": {
+          "enabled": true,
+          "type": "placeholder",
+          "string": "{value} Matches",
+          "styles": {
+              "backgroundColor": "#040404",
+              "borderRadius": 5
+          }
+      }
+      });  
+
+
+      // var svg = dimple.newSvg("#piechart", 300, 100);
+      // var oppositeRow = { 
+      //           'month' : d.team, 
+      //           // 'type' : 'Number of Matches won', 
+      //           'Number of Matches won' : +(d.matchcnt)
+      //          };
+
+      // var newData = [d, oppositeRow];
+      // var myChart = new dimple.chart(svg, newData);
+      // // myChart.addMeasureAxis("p", "percent");
+      // myChart.addSeries("type", dimple.plot.pie);
+      // myChart.draw();
+    });    
+  
+}
 
 // Initialize the dashboard
 var newleague;
