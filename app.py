@@ -99,18 +99,28 @@ def tschart(lgname, sname):
     return jlocdata
 
 @app.route("/pchart/<lgname>/<sname>")    
-def pchart(lgname, sname):
-    print(lgname)
-    print(sname)
+def pchart(lgname, sname):    
     dfa = df[df['league'].isin([lgname])]
     dfa = dfa[dfa['season'].isin([sname])]
     homecnt = dfa[(dfa['home_team_goal'] > dfa['away_team_goal'])].count().astype(str)
     awaycnt = dfa[(dfa['home_team_goal'] < dfa['away_team_goal'])].count().astype(str)
     drawcnt = dfa[(dfa['home_team_goal'] == dfa['away_team_goal'])].count().astype(str)
-    dfcnt = [{'team':'Won by Home team','matchcnt':homecnt[0]}, {'team':'Won by Away team', 'matchcnt':awaycnt[0] }, {'team':'Ended in Draw', 'matchcnt':drawcnt[0]}]
+    dfcnt = [{'team':'Home team','matchcnt':homecnt[0]}, {'team':'Away team', 'matchcnt':awaycnt[0] }, {'team':'Draw', 'matchcnt':drawcnt[0]}]
 
     return jsonify(dfcnt)
 
+@app.route("/bchart/<lgname>/<sname>")    
+def bchart(lgname, sname):    
+    dfa = df[df['league'].isin([lgname])]
+    dfa = dfa[dfa['season'].isin([sname])]
+    homedf = dfa[(dfa['home_team_goal'] > dfa['away_team_goal'])]
+    dfa = homedf[["home_Team", "home_team_goal"]]
+    dfc = dfa.groupby(["home_Team"],as_index = False).count()
+    bcdata = dfc.sort_values(['home_team_goal'], ascending=False)    
+
+    convjason = bcdata.to_dict(orient='records')
+    jlocdata = json.dumps(convjason)    
+    return jlocdata
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5005)
+    app.run(debug=True, port=5006)
