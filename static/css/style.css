@@ -9,20 +9,16 @@ div.map-container {
   height: 480px;
   width: 880px;
 }
-/* 
+
 div.chart-container {
   position: absolute;
   height: 800px;
   width: 600px;
-} */
+}
 
 #leaguelogo{
   height: 150px;
   width: 150px;
   align-content: center
-}
-
-.ct-label{
-  color: rgb(0, 0, 0)
 }
 
