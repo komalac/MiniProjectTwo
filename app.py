@@ -23,9 +23,7 @@ app = Flask(__name__)
 
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///data/SoccerDatabase.sqlite"
 db = SQLAlchemy(app)
-# print(db)
-# print('hello')
-# reflect an existing database into a new model
+
 Base = automap_base()
 # reflect the tables
 Base.prepare(db.engine, reflect=True)
@@ -34,7 +32,7 @@ Base.prepare(db.engine, reflect=True)
 soccer_data = Base.classes.MasterData
 stmt = db.session.query(soccer_data).statement
 df = pd.read_sql_query(stmt, db.session.bind)
-print(df.head())
+
 
 csv_path = "data/countries.csv"
 countryloc_df = pd.read_csv(csv_path, encoding='cp1252')
