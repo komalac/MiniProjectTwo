@@ -36,6 +36,7 @@
     countrymap()
     tschart(newleague, newseason)
     pchart(newleague, newseason)
+    bchart(newleague, newseason)
 
   });  
 };
@@ -64,7 +65,8 @@ function leagueChanged(newleague) {
   snames(newleague)
   lgdetails(newleague)    
   tschart(newleague, newseason)
-  pchart(newleague, newseason)  
+  pchart(newleague, newseason) 
+  bchart(newleague, newseason) 
 }
 
 function seasonChanged(newSeason) {
@@ -72,6 +74,7 @@ function seasonChanged(newSeason) {
   newseason = d3.select("#select-season").property("value")       
   tschart(newleague, newseason)
   pchart(newleague, newseason)
+  bchart(newleague, newseason)
 }
 
 function countrymap()
@@ -196,67 +199,83 @@ function tschart(newleague, newseason){
 function pchart(newleague, newseason){
 
   var url = "/pchart/" + newleague +'/'+ newseason;
-  // var svg = dimple.newSvg("#piechart", 590, 400);
+  // var svg = dimple.newSvg("#piechart", 90, 400);
   piedata = []
   d3.select("#pieChart").html("")
-  d3.json(url).then((pcdata) => { 
-    pcdata.forEach(function(d,i){
+    d3.json(url).then((pcdata) => { 
+      pcdata.forEach(function(d,i){
 
-      piedata.push({
+        piedata.push({
 
-        label: d.team,
+          label: d.team,
+    
+          value: +d.matchcnt
+        })
+      })
+      
+        var pie = new d3pie("pieChart", {                
+          "size": {    
+            "canvasHeight": 400,    
+            "canvasWidth": 350    
+          },
+      
+          "data": {    
+            "content": piedata    
+          },
+      
+          "labels": {    
+            "outer": {    
+              "pieDistance": 2   
+            }    
+          },    
+          "tooltips": {
+            "enabled": true,
+            "type": "placeholder",
+            "string": "{value} Matches",
+            "styles": {
+                "backgroundColor": "#040404",
+                "borderRadius": 5
+            }
+        }
+      });  
+    });    
   
-        value: +d.matchcnt
+}
+
+
+function bchart(newleague, newseason){
+
+  var url = "/bchart/" + newleague +'/'+ newseason;
+  
+  bardata = []
+  d3.select("#barchart").html("")
+  
+  var svg = dimple.newSvg("#barchart", 450, 400);
+
+  d3.json(url).then((bcdata) => { 
+    bcdata.forEach(function(d,i){
+      bardata.push({
+        label: d.home_Team,  
+        value: +d.home_team_goal
       })
     })
-    console.log(piedata)
-      var pie = new d3pie("pieChart", {
-        "header": {    
-          "title": {    
-            // "text": "Matches won",    
-            "fontSize": 22,    
-            "font": "verdana"    
-          },    
-        },
-    
-        "size": {    
-          "canvasHeight": 400,    
-          "canvasWidth": 480    
-        },
-    
-        "data": {    
-          "content": piedata    
-        },
-    
-        "labels": {    
-          "outer": {    
-            "pieDistance": 10   
-          }    
-        },    
-        "tooltips": {
-          "enabled": true,
-          "type": "placeholder",
-          "string": "{value} Matches",
-          "styles": {
-              "backgroundColor": "#040404",
-              "borderRadius": 5
-          }
-      }
-      });  
 
-
-      // var svg = dimple.newSvg("#piechart", 300, 100);
-      // var oppositeRow = { 
-      //           'month' : d.team, 
-      //           // 'type' : 'Number of Matches won', 
-      //           'Number of Matches won' : +(d.matchcnt)
-      //          };
-
-      // var newData = [d, oppositeRow];
-      // var myChart = new dimple.chart(svg, newData);
-      // // myChart.addMeasureAxis("p", "percent");
-      // myChart.addSeries("type", dimple.plot.pie);
-      // myChart.draw();
+    console.log(bardata)  
+        
+    var myChart = new dimple.chart(svg, bardata);
+    xAxis = myChart.addCategoryAxis("y", "label"),
+    yAxis = myChart.addMeasureAxis("x", "value"),    
+    yAxis.addOrderRule("value");
+    myChart.addSeries("null", dimple.plot.bar);
+    myChart.setBounds(50, 10, 350, 330)
+    xAxis.hidden = false;
+    yAxis.hidden = false;
+    yAxis.fontSize = 10;
+    xAxis.fontSize = 8;
+    myChart._widthPixels(300)    
+    myChart.draw();
+  
+    
     });    
   
 }
