@@ -28,9 +28,7 @@
           .property("value", snname);
       });    
     });
-    // snames(newleague) 
-    // newseason = d3.select("#select-season").property("value")    
-    // console.log(newseason)
+    
     newseason = '2008-2009'
     lgdetails(newleague)
     countrymap()
@@ -93,7 +91,7 @@ function countrymap()
       accessToken: API_KEY
     }).addTo(myMap);
     
-    // const countries=[];
+    
 
     d3.json("/clist").then((clist) => {  
       
@@ -260,13 +258,13 @@ function bchart(newleague, newseason){
       })
     })
 
-    console.log(bardata)  
+    
         
     var myChart = new dimple.chart(svg, bardata);
     xAxis = myChart.addCategoryAxis("y", "label"),
     yAxis = myChart.addMeasureAxis("x", "value"),    
     yAxis.addOrderRule("value");
-    myChart.addSeries("null", dimple.plot.bar);
+    myChart.addSeries("", dimple.plot.bar);
     myChart.setBounds(50, 10, 350, 330)
     xAxis.hidden = false;
     yAxis.hidden = false;

@@ -10,15 +10,10 @@ div.map-container {
   width: 880px;
 }
 
-/* div.chart-container {
-  position: absolute;
-  height: 800px;
-  width: 600px;
-} */
 
 #leaguelogo{
-  height: 150px;
-  width: 150px;
+  height: 100px;
+  width: 100px;
   align-content: center
 }
 
